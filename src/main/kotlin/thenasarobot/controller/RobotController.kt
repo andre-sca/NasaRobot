@@ -9,7 +9,7 @@ import thenasarobot.service.RobotService
 @RequestMapping("robot")
 class RobotController(private val robotService: RobotService) {
 
-    @PutMapping("/action")
+    @PostMapping("/action")
     fun robotAction(@RequestBody commandReceived: RobotRequest): String{
        return robotService.action(commandReceived.command)
     }
@@ -18,8 +18,6 @@ class RobotController(private val robotService: RobotService) {
     fun getRobotPosition() : String{
        return robotService.getLastPosition()
     }
-
-    ///change to post
 
 }
 
