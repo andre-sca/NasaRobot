@@ -1,5 +1,6 @@
 package thenasarobot.service
 
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import thenasarobot.invalidCommand
 import thenasarobot.invalidPosition
@@ -14,28 +15,33 @@ class RobotService() {
         var robot = Robot(Position(0,0), Direction.NORTH)
     }
 
+    private val log = LoggerFactory.getLogger(javaClass)
+
     fun action(s: String): String{
         robot = Robot(Position(0,0), Direction.NORTH)
         val listOfCharForAction = s.toCharArray()
 
-        try{
+
+        try {
             commandIsValid(s)
-        }catch(e: invalidCommand){
+        } catch (e: invalidCommand) {
             return e.message!!
         }
 
+
         listOfCharForAction.map {
-            if(it == 'R' || it == 'L'){
+            if (it == 'R' || it == 'L') {
                 robot.rotate(it)
             }
-            else if(it == 'M'){
+            else if (it == 'M') {
                 try {
                     robot.move()
-                } catch(e: invalidPosition){
+                } catch (e: invalidPosition) {
                    return e.message!!
                 }
             }
         }
+
         return  robot.toString()
 
     }
@@ -43,14 +49,12 @@ class RobotService() {
     fun commandIsValid(s: String){
         val listOfCharForAction = s.toCharArray()
 
-
         listOfCharForAction.map {
-            if(it != 'R' || it != 'L' || it != 'M'){
+            if (it != 'R' && it != 'L' && it != 'M') {
+                log.error("Invalid character: {}", it)
                 throw invalidCommand("Invalid command")
             }
         }
-
-
     }
 
     fun getLastPosition(): String{

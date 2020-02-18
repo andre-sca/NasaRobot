@@ -5,8 +5,8 @@ import thenasarobot.invalidPosition
 data class Position(var x: Int, var y: Int) {
 
     companion object{
-        val maxX = 5
-        val maxY = 5
+        const val maxX = 5
+        const val maxY = 5
     }
 
     fun nextPosition(newX: Int, newY: Int){
@@ -19,5 +19,4 @@ data class Position(var x: Int, var y: Int) {
             throw invalidPosition("You fell into a pit and broke")
         }
     }
-
 }
