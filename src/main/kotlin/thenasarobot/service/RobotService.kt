@@ -22,6 +22,7 @@ class RobotService() {
         val listOfCharForAction = s.toCharArray()
 
 
+
         try {
             commandIsValid(s)
         } catch (e: invalidCommand) {
