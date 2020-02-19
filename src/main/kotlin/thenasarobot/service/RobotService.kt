@@ -2,8 +2,6 @@ package thenasarobot.service
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import thenasarobot.invalidCommand
-import thenasarobot.invalidPosition
 import thenasarobot.models.Direction
 import thenasarobot.models.Position
 import thenasarobot.models.Robot
@@ -25,19 +23,17 @@ class RobotService() {
 
         try {
             commandIsValid(s)
-        } catch (e: invalidCommand) {
+        } catch (e: InvalidCommandException) {
             return e.message!!
         }
 
 
         listOfCharForAction.map {
-            if (it == 'R' || it == 'L') {
-                robot.rotate(it)
-            }
+            if (it == 'R' || it == 'L') robot.rotate(it)
             else if (it == 'M') {
                 try {
                     robot.move()
-                } catch (e: invalidPosition) {
+                } catch (e: InvalidPositionException) {
                    return e.message!!
                 }
             }
@@ -53,7 +49,7 @@ class RobotService() {
         listOfCharForAction.map {
             if (it != 'R' && it != 'L' && it != 'M') {
                 log.error("Invalid character: {}", it)
-                throw invalidCommand("Invalid command")
+                throw InvalidCommandException("Invalid command")
             }
         }
     }

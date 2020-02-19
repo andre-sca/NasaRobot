@@ -1,6 +1,6 @@
 package thenasarobot.models
 
-import thenasarobot.invalidPosition
+import thenasarobot.service.InvalidPositionException
 
 data class Position(var x: Int, var y: Int) {
 
@@ -16,7 +16,7 @@ data class Position(var x: Int, var y: Int) {
 
     fun isValid(position: Position){
         if(position.y > maxY || position.x > maxX){
-            throw invalidPosition("You fell into a pit and broke")
+            throw InvalidPositionException("You fell into a pit and broke")
         }
     }
 }
